@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
@@ -20,8 +22,8 @@ public class Diary {
     @GeneratedValue
     @JsonIgnore
     private Long idDiary;
-    private Timestamp startTime;
-    private Timestamp endingTime;
+    private LocalTime startTime;
+    private LocalTime endingTime;
     @ManyToOne
     @JoinColumn(name="id_dentist", nullable=false)
     @JsonIgnore
