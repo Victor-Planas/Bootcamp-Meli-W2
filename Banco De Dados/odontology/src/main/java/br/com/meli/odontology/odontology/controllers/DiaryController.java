@@ -29,7 +29,7 @@ public class DiaryController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteDiaryById(@RequestParam Long id){
+    public void deleteDiaryById(@PathVariable Long id){
         diaryService.deleteDiaryById(id);
     }
 }

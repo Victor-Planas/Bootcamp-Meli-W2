@@ -1,11 +1,12 @@
 package br.com.meli.odontology.odontology.controllers;
 
 import br.com.meli.odontology.odontology.entities.Dentist;
+import br.com.meli.odontology.odontology.responses.DentistSchedule;
 import br.com.meli.odontology.odontology.services.DentistService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,17 @@ public class DentistController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteDentistById(@RequestParam Long id){
+    public void deleteDentistById(@PathVariable Long id){
         dentistService.deleteDentistById(id);
+    }
+
+    @GetMapping("/list2turnDentistsByDate/{date}")
+    public List<Dentist> listDentistsTwoTurnsSameDay(@PathVariable LocalDate date){
+        return dentistService.listDentistsMoreThanTwoTurnsByDate(date);
+    }
+
+    @GetMapping("/listAllAppointments")
+    public List<DentistSchedule> listAllAppointments(@RequestBody Dentist dentist){
+        return dentistService.listAllAppointments(dentist);
     }
 }

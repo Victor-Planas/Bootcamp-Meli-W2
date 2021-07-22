@@ -32,11 +32,15 @@ INSERT INTO `turn_status`
 VALUES
 (1, 'Concluido', 'turno concluido'),
 (2, 'Cancelado', 'turno cancelado'),
-(3, 'Pendente', 'turno pendente');
+(3, 'Pendente', 'turno pendente'),
+(4, 'Reprogramado', 'turno reprogramado');
 
 INSERT INTO `turns`
-(`id_turns`, `day`, `id_diary`, `id_turn_status`, `id_patient`)
+(`id_turn`, `day`, `id_diary`, `id_turn_status`, `id_patient`)
 VALUES
-(1, '10', 1, 1, 1),
-(2, '11', 2, 2, 2),
-(3, '12', 3, 3, 3);
+(1, '2021-07-22', 1, 1, 1),
+(2, '2021-07-20', 2, 2, 2),
+(3, '2021-07-19', 3, 3, 3),
+(4, '2021-07-22', 1, 1, 1),
+(5, '2021-07-22', 1, 4, 1),
+(6, '2021-07-22', 1, 4, 1);

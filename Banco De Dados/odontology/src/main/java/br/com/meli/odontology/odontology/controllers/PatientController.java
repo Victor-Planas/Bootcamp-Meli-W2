@@ -1,12 +1,10 @@
 package br.com.meli.odontology.odontology.controllers;
-
-import br.com.meli.odontology.odontology.entities.Dentist;
 import br.com.meli.odontology.odontology.entities.Patient;
-import br.com.meli.odontology.odontology.services.DentistService;
 import br.com.meli.odontology.odontology.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -31,7 +29,13 @@ public class PatientController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deletePatientById(@RequestParam Long id){
+    public void deletePatientById(@PathVariable Long id){
         patientService.deletePatient(id);
     }
+
+    @GetMapping("/listPatientsByDay/{date}")
+    public List<Patient> listAllPatientByDay(@PathVariable LocalDate date){
+        return patientService.listAllPatientsByDate(date);
+    }
+
 }

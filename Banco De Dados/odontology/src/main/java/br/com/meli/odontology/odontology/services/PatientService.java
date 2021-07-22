@@ -5,6 +5,7 @@ import br.com.meli.odontology.odontology.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -26,5 +27,9 @@ public class PatientService {
 
     public void deletePatient(Long id){
         patientRepository.deleteById(id);
+    }
+
+    public List<Patient> listAllPatientsByDate(LocalDate date){
+        return patientRepository.findAllByDate(date);
     }
 }

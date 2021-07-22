@@ -1,5 +1,6 @@
 package br.com.meli.odontology.odontology.controllers;
 
+import br.com.meli.odontology.odontology.entities.Turn;
 import br.com.meli.odontology.odontology.entities.TurnStatus;
 import br.com.meli.odontology.odontology.services.TurnStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,8 @@ public class TurnStatusController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteTurnStatusById(@RequestParam Long id){
+    public void deleteTurnStatusById(@PathVariable Long id){
         turnStatusService.deleteTurnStatusById(id);
     }
+
 }
