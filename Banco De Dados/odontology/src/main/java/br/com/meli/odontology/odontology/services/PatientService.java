@@ -1,7 +1,9 @@
 package br.com.meli.odontology.odontology.services;
 
 import br.com.meli.odontology.odontology.entities.Patient;
+import br.com.meli.odontology.odontology.forms.PatientForm;
 import br.com.meli.odontology.odontology.repositories.PatientRepository;
+import br.com.meli.odontology.odontology.repositories.TurnRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,15 @@ public class PatientService {
     @Autowired
     PatientRepository patientRepository;
 
-    public Patient addPatient(Patient patient){
-        return patientRepository.save(patient);
+    @Autowired
+    TurnRepository turnRepository;
+
+    public Patient addPatient(PatientForm patient){
+        return patientRepository.save(convertForm(patient));
     }
 
-    public Patient updatePatient(Patient patient){
-        return patientRepository.save(patient);
+    public Patient updatePatient(PatientForm patient){
+        return patientRepository.save(convertForm(patient));
     }
 
     public List<Patient> listAllPatients(){
@@ -31,5 +36,17 @@ public class PatientService {
 
     public List<Patient> listAllPatientsByDate(LocalDate date){
         return patientRepository.findAllByDate(date);
+    }
+    private Patient convertForm(PatientForm form){
+        return new Patient(form.getName(),form.getLastName(),form.getAddress(),form.getDni(), form.getBirthDate(),form.getPhone(), form.getEmail());
+
+    }
+
+    public Patient setTurns(Long idPatient, List<Long> turns) {
+        var patient = patientRepository.findById(idPatient).orElseThrow();
+        var turnList = turnRepository.findAllById(turns);
+
+        patient.setTurns(turnList);
+        return patient;
     }
 }

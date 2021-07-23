@@ -2,6 +2,7 @@ package br.com.meli.odontology.odontology.controllers;
 
 import br.com.meli.odontology.odontology.entities.Dentist;
 import br.com.meli.odontology.odontology.entities.Turn;
+import br.com.meli.odontology.odontology.forms.TurnForm;
 import br.com.meli.odontology.odontology.services.TurnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class TurnController {
     TurnService turnService;
 
     @PostMapping("/add")
-    public Turn addTurn(@RequestBody Turn Turn){
+    public Turn addTurn(@RequestBody TurnForm Turn){
         return turnService.addTurn(Turn);
     }
 
@@ -26,7 +27,7 @@ public class TurnController {
     }
 
     @PutMapping("/update")
-    public Turn updateTurn(@RequestBody Turn Turn){
+    public Turn updateTurn(@RequestBody TurnForm Turn){
         return turnService.updateTurn(Turn);
     }
 
@@ -55,9 +56,23 @@ public class TurnController {
         return turnService.listAllTurnsByStatusByDentist(dentist);
     }
 
-    @PutMapping("/reschedule/{idTurn}/{newTurn}}")
-    public void reeschedule(@PathVariable Long newTurn, @PathVariable Long idTurn){
+    @PutMapping("/reschedule/{idTurn}}")
+    public void reeschedule(@RequestBody Turn newTurn, @PathVariable Long idTurn){
         turnService.reeschedule(idTurn, newTurn);
+    }
+
+    @PostMapping("/setDiary/{idTurn}/{idDiary}")
+    public Turn setDiary(@PathVariable Long idTurn, @PathVariable Long idDiary){
+        return turnService.setDiary(idTurn,idDiary);
+    }
+
+    @PostMapping("/setStatus/{idTurn}/{idStatus}")
+    public Turn setStatus(@PathVariable Long idTurn, @PathVariable Long idStatus){
+        return turnService.setStatus(idTurn,idStatus);
+    }
+    @PostMapping("/setPatient/{idTurn}/{idPatient}")
+    public Turn setPatient(@PathVariable Long idTurn, @PathVariable Long idPatient){
+        return turnService.setPatient(idTurn,idPatient);
     }
 
 }

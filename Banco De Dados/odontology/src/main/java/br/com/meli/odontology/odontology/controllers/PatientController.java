@@ -1,5 +1,6 @@
 package br.com.meli.odontology.odontology.controllers;
 import br.com.meli.odontology.odontology.entities.Patient;
+import br.com.meli.odontology.odontology.forms.PatientForm;
 import br.com.meli.odontology.odontology.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ public class PatientController {
     PatientService patientService;
 
     @PostMapping("/add")
-    public Patient addPatient(@RequestBody Patient patient){
+    public Patient addPatient(@RequestBody PatientForm patient){
         return patientService.addPatient(patient);
     }
 
@@ -24,7 +25,7 @@ public class PatientController {
     }
 
     @PutMapping("/update")
-    public Patient updatePatient(@RequestBody Patient patient){
+    public Patient updatePatient(@RequestBody PatientForm patient){
         return patientService.updatePatient(patient);
     }
 
@@ -36,6 +37,11 @@ public class PatientController {
     @GetMapping("/listPatientsByDay/{date}")
     public List<Patient> listAllPatientByDay(@PathVariable LocalDate date){
         return patientService.listAllPatientsByDate(date);
+    }
+
+    @PostMapping("/setTurns/{idPatient}")
+    public Patient setTurns(@PathVariable Long idPatient, @RequestBody List<Long> turns){
+        return patientService.setTurns(idPatient,turns);
     }
 
 }

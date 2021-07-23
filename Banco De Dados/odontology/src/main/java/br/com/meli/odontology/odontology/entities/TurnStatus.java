@@ -14,11 +14,10 @@ import java.util.List;
 public class TurnStatus {
     @Id
     @GeneratedValue
-    @JsonIgnore
     private Long idTurnStatus;
     private String name;
     private String description;
-    @JsonIgnore
     @OneToMany(mappedBy = "turnStatus")
+    @JsonIgnore
     List<Turn> turns;
 }

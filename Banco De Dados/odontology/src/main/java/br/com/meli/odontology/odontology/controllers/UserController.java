@@ -1,6 +1,7 @@
 package br.com.meli.odontology.odontology.controllers;
 
 import br.com.meli.odontology.odontology.entities.User;
+import br.com.meli.odontology.odontology.forms.UserForm;
 import br.com.meli.odontology.odontology.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/add")
-    public User addUser(@RequestBody User User){
+    public User addUser(@RequestBody UserForm User){
         return userService.addUser(User);
     }
 
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public User updateUser(@RequestBody User User){
+    public User updateUser(@RequestBody UserForm User){
         return userService.updateUser(User);
     }
 

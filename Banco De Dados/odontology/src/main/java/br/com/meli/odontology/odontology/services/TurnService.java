@@ -2,7 +2,12 @@ package br.com.meli.odontology.odontology.services;
 
 import br.com.meli.odontology.odontology.entities.Dentist;
 import br.com.meli.odontology.odontology.entities.Turn;
+import br.com.meli.odontology.odontology.entities.TurnStatus;
+import br.com.meli.odontology.odontology.forms.TurnForm;
+import br.com.meli.odontology.odontology.repositories.DiaryRepository;
+import br.com.meli.odontology.odontology.repositories.PatientRepository;
 import br.com.meli.odontology.odontology.repositories.TurnRepository;
+import br.com.meli.odontology.odontology.repositories.TurnStatusRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -16,16 +21,26 @@ public class TurnService {
     @Autowired
     TurnRepository turnRepository;
 
-    public Turn addTurn(Turn Turn) {
-        return turnRepository.save(Turn);
+    @Autowired
+    TurnStatusRepository turnStatusRepository;
+
+    @Autowired
+    DiaryRepository diaryRepository;
+
+    @Autowired
+    PatientRepository patientRepository;
+
+    public Turn addTurn(TurnForm Turn) {
+
+        return turnRepository.save(convertForm(Turn));
     }
 
     public List<Turn> listAllTurns() {
         return turnRepository.findAll();
     }
 
-    public Turn updateTurn(Turn Turn) {
-        return turnRepository.save(Turn);
+    public Turn updateTurn(TurnForm Turn) {
+        return turnRepository.save(convertForm(Turn));
     }
 
     public void deleteTurnById(Long id) {
@@ -43,10 +58,40 @@ public class TurnService {
         return turnRepository.listAllReescheduledByDentist(dentist);
     }
 
-    public void reeschedule(Long idTurn, Long newTurn) {
+    public void reeschedule(Long idTurn, Turn newTurn) {
         var turn = turnRepository.findById(idTurn).orElseThrow();
-        var turnStatus = turn.getTurnStatus();
-        turnStatus.setName("Reprogramado");
+        turn.setDay(newTurn.getDay());
+        turn.setTurnStatus(turnStatusRepository.getById(4L));
 
+
+    }
+
+    private Turn convertForm(TurnForm form){
+        var diary = diaryRepository.findById(form.getIdDiary()).orElseThrow();
+        var turnStatus = turnStatusRepository.findById(form.getIdTurnStatus()).orElseThrow();
+        var patient = patientRepository.findById(form.getIdPatient()).orElseThrow();
+
+        return new Turn(form.getDay(), diary, turnStatus, patient);
+    }
+
+    public Turn setDiary(Long idTurn, Long idDiary) {
+        var turn = turnRepository.findById(idTurn).orElseThrow();
+        turn.setDiary(diaryRepository.findById(idDiary).orElseThrow());
+
+        return turn;
+    }
+
+    public Turn setStatus(Long idTurn, Long idStatus) {
+        var turn = turnRepository.findById(idTurn).orElseThrow();
+        turn.setTurnStatus(turnStatusRepository.findById(idStatus).orElseThrow());
+
+        return turn;
+    }
+
+    public Turn setPatient(Long idTurn, Long idPatient) {
+        var turn = turnRepository.findById(idTurn).orElseThrow();
+        turn.setPatient(patientRepository.findById(idPatient).orElseThrow());
+
+        return turn;
     }
 }
