@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -34,8 +35,9 @@ public class PatientService {
         patientRepository.deleteById(id);
     }
 
-    public List<Patient> listAllPatientsByDate(LocalDate date){
-        return patientRepository.findAllByDate(date);
+    public List<Patient> listAllPatientsByDate(String date){
+        final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return patientRepository.findAllByDate(LocalDate.parse(date,dtf));
     }
     private Patient convertForm(PatientForm form){
         return new Patient(form.getName(),form.getLastName(),form.getAddress(),form.getDni(), form.getBirthDate(),form.getPhone(), form.getEmail());

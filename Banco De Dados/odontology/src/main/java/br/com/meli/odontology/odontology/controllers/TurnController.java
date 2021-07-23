@@ -38,17 +38,17 @@ public class TurnController {
 
     @GetMapping("/listAllFinishedTurn")
     public List<Turn> listAllTurnsFinishedStatus(){
-        return turnService.listAllTurnsByStatus("Concluido");
+        return turnService.listAllTurnsByStatus(1L);
     }
 
     @GetMapping("/listAllPendingTurn/{date}")
-    public List<Turn> listAllTurnsPendingStatus(@PathVariable LocalDate date){
-        return turnService.listAllTurnsByStatusByDate("Pendente", date);
+    public List<Turn> listAllTurnsPendingStatus(@PathVariable String date){
+        return turnService.listAllTurnsByStatusByDate(3L, date);
     }
 
     @GetMapping("/listAllReescheduled")
     public List<Turn> listAllReescheduled(){
-        return turnService.listAllTurnsByStatus("Reprogramado");
+        return turnService.listAllTurnsByStatus(4L);
     }
 
     @GetMapping("/listAllReescheduledByDentist")

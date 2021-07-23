@@ -17,11 +17,11 @@ public interface TurnRepository extends JpaRepository<Turn, Long> {
     @Query("select t " +
             "From Turn t " +
             "inner join t.turnStatus ts " +
-            "where ts.name = :status " +
+            "where ts.idTurnStatus = :status " +
             "AND (t.day = :date OR :date is null)")
-    List<Turn> listAllTurnsByStatusByDate(String status, LocalDate date);
+    List<Turn> listAllTurnsByStatusByDate(Long status, LocalDate date);
 
-    default List<Turn> listAllTurnsByStatus(String status){
+    default List<Turn> listAllTurnsByStatus(Long status){
         return listAllTurnsByStatusByDate(status, null);
     }
 

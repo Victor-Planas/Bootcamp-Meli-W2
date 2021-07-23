@@ -35,7 +35,7 @@ public class PatientController {
     }
 
     @GetMapping("/listPatientsByDay/{date}")
-    public List<Patient> listAllPatientByDay(@PathVariable LocalDate date){
+    public List<Patient> listAllPatientByDay(@PathVariable String date){
         return patientService.listAllPatientsByDate(date);
     }
 

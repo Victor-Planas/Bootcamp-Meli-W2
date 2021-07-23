@@ -9,11 +9,13 @@ import br.com.meli.odontology.odontology.repositories.PatientRepository;
 import br.com.meli.odontology.odontology.repositories.TurnRepository;
 import br.com.meli.odontology.odontology.repositories.TurnStatusRepository;
 import javassist.NotFoundException;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -47,11 +49,12 @@ public class TurnService {
         turnRepository.deleteById(id);
     }
 
-    public List<Turn> listAllTurnsByStatus(String status) {
+    public List<Turn> listAllTurnsByStatus(Long status) {
         return turnRepository.listAllTurnsByStatus(status);
     }
-    public List<Turn> listAllTurnsByStatusByDate(String status, LocalDate date) {
-        return turnRepository.listAllTurnsByStatusByDate(status, date);
+    public List<Turn> listAllTurnsByStatusByDate(Long status, String date) {
+        final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return turnRepository.listAllTurnsByStatusByDate(status, LocalDate.parse(date,dtf));
     }
 
     public List<Turn> listAllTurnsByStatusByDentist(Dentist dentist) {

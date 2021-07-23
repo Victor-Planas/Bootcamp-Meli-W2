@@ -5,10 +5,12 @@ import br.com.meli.odontology.odontology.forms.DentistForm;
 import br.com.meli.odontology.odontology.repositories.DentistRepository;
 import br.com.meli.odontology.odontology.repositories.DiaryRepository;
 import br.com.meli.odontology.odontology.responses.DentistSchedule;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -35,8 +37,9 @@ public class DentistService {
         dentistRepository.deleteById(id);
     }
 
-    public List<Dentist> listDentistsMoreThanTwoTurnsByDate(LocalDate date){
-        return dentistRepository.listDentistsMoreThanTwoTurnsByDate(date);
+    public List<Dentist> listDentistsMoreThanTwoTurnsByDate(String date){
+        final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return dentistRepository.listDentistsMoreThanTwoTurnsByDate(LocalDate.parse(date,dtf));
     }
 
     public List<DentistSchedule> listAllAppointments(DentistForm dentist) {

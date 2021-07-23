@@ -36,8 +36,8 @@ public class DentistController {
         dentistService.deleteDentistById(id);
     }
 
-    @GetMapping("/list2turnDentistsByDate/{date}")
-    public List<Dentist> listDentistsTwoTurnsSameDay(@PathVariable LocalDate date){
+    @GetMapping("/listTwoturnDentistsByDate/{date}")
+    public List<Dentist> listDentistsTwoTurnsSameDay(@PathVariable String date){
         return dentistService.listDentistsMoreThanTwoTurnsByDate(date);
     }
 

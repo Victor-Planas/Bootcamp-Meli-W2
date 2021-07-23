@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-    @Query("SELECT p "+
+    @Query("SELECT distinct p "+
     "FROM Patient p "+
     "INNER JOIN p.turns turns "+
     "WHERE turns.day = :date")
