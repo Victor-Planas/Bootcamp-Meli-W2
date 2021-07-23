@@ -3,7 +3,9 @@ package br.com.meli.odontology.odontology.services;
 import br.com.meli.odontology.odontology.entities.Dentist;
 import br.com.meli.odontology.odontology.entities.Turn;
 import br.com.meli.odontology.odontology.repositories.TurnRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -39,5 +41,12 @@ public class TurnService {
 
     public List<Turn> listAllTurnsByStatusByDentist(Dentist dentist) {
         return turnRepository.listAllReescheduledByDentist(dentist);
+    }
+
+    public void reeschedule(Long idTurn, Long newTurn) {
+        var turn = turnRepository.findById(idTurn).orElseThrow();
+        var turnStatus = turn.getTurnStatus();
+        turnStatus.setName("Reprogramado");
+
     }
 }

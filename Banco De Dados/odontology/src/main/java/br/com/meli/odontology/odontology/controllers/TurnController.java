@@ -55,4 +55,9 @@ public class TurnController {
         return turnService.listAllTurnsByStatusByDentist(dentist);
     }
 
+    @PutMapping("/reschedule/{idTurn}/{newTurn}}")
+    public void reeschedule(@PathVariable Long newTurn, @PathVariable Long idTurn){
+        turnService.reeschedule(idTurn, newTurn);
+    }
+
 }
