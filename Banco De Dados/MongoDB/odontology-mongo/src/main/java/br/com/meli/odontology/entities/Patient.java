@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 
 import java.time.LocalDate;
@@ -22,9 +23,11 @@ public class Patient {
     @Id
     private String idPatient;
     private String name;
+    @Field("last_name")
     private String lastName;
     private String address;
     private String dni;
+    @Field("birth_date")
     private LocalDate birthDate;
     private String phone;
     private String email;

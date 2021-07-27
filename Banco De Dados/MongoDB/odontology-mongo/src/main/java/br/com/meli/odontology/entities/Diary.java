@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 
 import java.time.LocalTime;
@@ -21,7 +22,9 @@ import java.util.List;
 public class Diary {
     @Id
     private String idDiary;
+    @Field("start_time")
     private LocalTime startTime;
+    @Field("ending_time")
     private LocalTime endingTime;
     @DBRef
     private Dentist dentist;

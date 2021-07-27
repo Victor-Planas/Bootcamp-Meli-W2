@@ -7,4 +7,5 @@ spring:
 
   main:
     allow-bean-definition-overriding: true
-
+  jackson:
+    property-naming-strategy: SNAKE_CASE
